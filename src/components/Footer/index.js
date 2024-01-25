@@ -9,9 +9,33 @@ const Footer = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    const jsonData = JSON.stringify({
+      "email":data.email
+    });
+    reset()
+    fetch('https://flask-app-7xee.onrender.com/update_sheet', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonData
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response data
+        alert("Subscribed Succesfully!")
+        console.log('Response:', data);
+      })
+      .catch(error => {
+        // Handle errors
+        console.error('Error:', error);
+      });
+
+  };
   console.log(errors);
 
   return (
@@ -77,7 +101,7 @@ const Footer = () => {
 
       <div className="w-full  mt-16 md:mt-24 relative font-medium border-t border-solid border-light py-6 px-8 flex  flex-col md:flex-row items-center justify-between">
         <span className="text-center">
-          &copy;2023 Blogkinng. All rights reserved.
+          &copy;2024 Blogkinng. All rights reserved.
         </span>
         <Link
           href="/sitemap.xml"
