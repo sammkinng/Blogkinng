@@ -6,9 +6,15 @@ export default function ContactForm() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    reset()
+    const subject="Let's Connect"
+    const body=`Hello! My name is ${data.name} and I want to discuss a potential project. You can email me at ${data.email} or reach out to me on ${data.phone}. Here are some details about my project: ${data.sub}`
+    window.location.href=`mailto:blog@sammkinng.in?subject=${subject}&body=${body}`;
+  };;
   console.log(errors);
 
   return (
@@ -31,12 +37,12 @@ export default function ContactForm() {
       <input
         type="tel"
         placeholder="your phone"
-        {...register("phone number", {})}
+        {...register("phone", {})}
         className="outline-none border-0 p-0 mx-2 focus:ring-0 placeholder:text-center placeholder:text-lg border-b border-gray 
         focus:border-gray bg-transparent"
       />
       Here are some details about my project: <br />
-      <textarea {...register("project details", {})} 
+      <textarea {...register("sub", {})} 
       placeholder="My project is about..."
       rows={3}
       className="w-full outline-none border-0 p-0 mx-0 focus:ring-0  placeholder:text-lg border-b border-gray 
