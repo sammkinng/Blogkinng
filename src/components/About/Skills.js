@@ -3,15 +3,17 @@ const SkillList = [
   "tailwind css",
   "figma",
   "javaScript",
-  "web design",
+  "React.js",
   "Gatsby.js",
-  "strapi",
+  "Angular",
   "firebase",
-  "generative AI",
-  "wireframing",
+  "ChatGPT",
+  "AWS",
   "SEO",
-  "framer motion",
-  "sanity",
+  "Python",
+  "Java",
+  "Typescript",
+  "Flask"
 ];
 
 const Skills = () => {
