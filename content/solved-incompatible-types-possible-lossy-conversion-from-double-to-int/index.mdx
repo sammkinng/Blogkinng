@@ -1,0 +1,135 @@
+---
+title: "[Solved] Incompatible types: possible lossy conversion from double to int"
+description: "Sometimes, you're doing some coding in Java, and out of the blue, you get hit with the 'Incompatible types: possible lossy conversion from double to int' error."
+image: "../../public/blogs/Screenshot from 2024-01-26 16-43-45.png"
+publishedAt: "2022-9-17"
+updatedAt: "2022-9-18"
+author: "Blogkinng"
+isPublished: true
+tags:
+- java
+---
+
+
+
+Sometimes, you're doing some coding in Java, and out of the blue, you get hit with the '**Incompatible types: possible lossy conversion from double to int**' error. It happens because Java wants to make sure you don't lose any precious data when converting from double to int. But fear not! We're here to help you understand why this occurs, and more importantly, here's the quick solution: use type casting to explicitly convert the double to int, ensuring you don't lose any data in the process.
+
+## What is this problem?
+
+Before we dive into the solution, let's unravel the mystery behind this error. In Java, data types matter, and this error occurs when you try to assign a value from a larger data type (like `double`) to a smaller one (like `int`). Java wants to make sure you don't lose data precision during this conversion, and it's warning you about it.
+
+## How to recreate this issue?
+
+Recreating this issue is as easy as finding a street vendor serving mouth-watering chaat in Delhi. You just need to:
+
+1. Declare an `int` variable.
+2. Try to assign a `double` value to it.
+
+The Java compiler, like a street vendor, will raise its voice in the form of this error.
+
+## Code Example
+
+Here's a simple code snippet to illustrate this situation:
+
+```java title="java" /int/ /double/ {6}
+public class DelhiCoder {
+    public static void main(String[] args) {
+        int numberOfParathas = 2;
+        double piValue = 3.14159;
+
+        numberOfParathas = piValue; // Oops, incompatible types error!
+    }
+}
+```
+
+## Error Message
+
+When you compile this code, you'll be greeted with the following error message:
+
+```
+error: incompatible types: possible lossy conversion from double to int
+```
+![][1]
+
+## What's Wrong in the Code?
+
+The issue lies in trying to fit a `double` (which can store decimal values with precision) into an `int` (which can only store whole numbers). Java is cautious about data loss and won't allow this conversion without your explicit consent.
+
+## Solutions
+
+Now, let's feast on the solutions to resolve this error and enjoy our programming meal without any hiccups.
+
+### Solution 1: Explicit Casting
+
+You can use explicit casting to tell Java that you're aware of the potential loss of data precision. Here's how:
+
+```
+numberOfParathas = (int) piValue; // Explicit casting
+```
+
+>Java takes data precision seriously, and it's better to address this issue than risk losing important data.
+Keep practicing, and you'll become a master at handling data types in Java.
+
+
+### Solution 2: Rounding
+
+If you want to round the `double` value to the nearest `int`, you can use the `Math.round()` method:
+
+```
+numberOfParathas = (int) Math.round(piValue); // Rounding to the nearest int
+```
+Here, we add an extra step to explicitly round the double value using `Math.round()`. This method rounds the value to the nearest integer. If the fractional part is `.5` or greater, it rounds up; otherwise, it rounds down. This solution provides precision control and is ideal when you need to ensure that the double value is rounded to the nearest integer before conversion.
+
+### Key Differences
+
+
+**Precision Control:**
+Solution 1 relies on Java's implicit rounding during casting, which can truncate the decimal part.
+Solution 2 uses `Math.round()` for precise rounding to the nearest integer, ensuring consistent results.
+
+**Clarity:**
+Solution 1 is concise but might be less explicit about your rounding intentions.
+Solution 2 clearly conveys your intention to round the value before conversion, making your code more readable for others.
+
+**Handling Edge Cases:**
+Solution 1 may result in unexpected behaviour when the fractional part is close to the next integer due to truncation.
+Solution 2 ensures proper rounding for all cases, reducing the chance of surprises
+
+
+### Solution 3: Changing Data Type
+
+If you anticipate decimal values, consider using a `double` or another appropriate data type for your variable instead of an `int`.
+
+## Common Scenarios and Troubleshooting
+Here are some common scenarios where you might encounter this error and troubleshooting tips:
+
+### Scenario 1: Performing Mathematical Operations
+If you're performing mathematical operations involving `double` and `int` types, this error may arise when you attempt to assign the result to an int variable. Ensure that you apply the appropriate rounding method, either implicit or explicit, based on your requirements.
+
+### Scenario 2: Parsing Values
+When parsing or converting values from one type to another, such as reading user input or data from external sources, be mindful of the data types involved. Apply rounding if needed to match the expected target type.
+
+### Scenario 3: Working with APIs
+When working with external APIs or libraries that return double values, check the expected data type for your application. Adjust your conversion approach accordingly.
+
+### Scenario 4: Loop Iterations
+In loop iterations, especially when calculating averages or totals, take care to handle double to int conversions correctly. Ensure that the conversion method aligns with your intended behaviour.
+
+### Troubleshooting Tips
+- Verify the data types of your variables and the result of operations.
+- Choose the appropriate conversion method (implicit or explicit rounding) based on your use case.
+- Test your code with different inputs to ensure it behaves as expected.
+- Pay attention to the edge cases where rounding off may impact the result
+
+## Conclusion
+
+In the vibrant world of Java programming, the `Incompatible types` error serves as a guardian of data integrity. By understanding how to handle this error with casting and rounding, you can ensure your code flows as smoothly as the Yamuna River in Delhi. Remember, precision matters, and Java is here to help you maintain it.
+
+---
+## Reference Links
+
+1. [Java Data Types](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html)
+2. [Official Java Documentation](https://docs.oracle.com/en/java/javase/index.html)
+
+
+  [1]: https://logiclair.org/?qa=blob&qa_blobid=5919342987601741074

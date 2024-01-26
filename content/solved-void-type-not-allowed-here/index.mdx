@@ -1,0 +1,157 @@
+---
+title: "[SOLVED] Void type not allowed here"
+description: "Sometimes when you're diving deep into the world of Java, and you might get a bug 'Void type not allowed here.' This bug pops up when you're hoping a function to hand you something, but it decides to ghost you instead."
+image: "../../public/blogs/Screenshot from 2024-01-26 16-44-25.png"
+publishedAt: "2022-10-17"
+updatedAt: "2022-11-12"
+author: "Blogkinng"
+isPublished: true
+tags:
+- java
+---
+
+
+
+"Sometimes when you're diving deep into the world of Java, and you might get a bug "**Void type not allowed here.**" This bug pops up when you're hoping a function to hand you something, but it decides to ghost you instead. **Quick fix**: either switch up the return type or give that function a solid talking-to until it starts behaving the way you want. Easy, right?
+
+## What is this problem?
+
+So, you're cruising through your Java code, feeling like a king, and suddenly, out of the blue, bam! The "**Void type not allowed here**" error smacks you in the face. It comes when you store output of void function in a variable.
+
+## Reasons for the Error:
+
+### 1. Return Type Mismatch:
+```java title="java" {4,10}
+import java.util.*;
+
+class Main {
+    public static void randomFunc() {
+        //Some code here
+    }
+
+    public static void main(String[] args) {
+        
+        int x = randomFunc()
+    }
+}
+```
+Check the method's return type and change it to an appropriate data type if needed.
+
+### 2. Void Cannot Be Used as a Data Type:
+```java title="java"
+Void someVariable;
+```
+Ensure you declare variables using valid data types, not void.
+
+### 3. Void in the Wrong Place:
+```java title="java" {3}
+public static void randomFunc() {
+  //Some code here
+  return Void;
+}
+```
+Review method declarations to ensure the correct use of the void keyword.
+
+## How to recreate this issue?
+
+Imagine this - you've got a slick class named "`Main`" you're importing some packages, and there's this method called `randomFunc` that's supposed to showcase some cool details. You hit run, and boom! The "**Void type not allowed here**" greets you like that annoying friend who never leaves your side.
+
+### Code example
+```java title="Main.java" {14}
+    import java.util.*;
+
+    class Main {
+        public static void randomFunc(ArrayList<String> infoList) {
+            //Some code here
+            for (String info : infoList) {
+                System.out.println(info);
+            }
+        }
+
+        public static void main(String[] args) {
+            ArrayList<String> details = new ArrayList<>();
+            details.add("Delhite ");
+            System.out.println(randomFunc(details));
+        }
+    }
+```
+
+### Error message
+
+```
+    ERROR!
+    javac /tmp/iOM5hc9K81/Main.java
+    /tmp/iOM5hc9K81/Main.java:14: error: 'void' type not allowed here
+            System.out.println(randomFunc(details));
+    ^
+    1 error
+```
+
+## What was wrong in the code
+
+Here's the lowdown - the `randomFunc` method is a void, It's not meant to give back anything. But look at you, trying to print what it doesn't have. No wonder Java is throwing a tantrum.
+
+## Solutions
+
+### 1. Embrace the Void
+
+Stick to the void, Your `randomFunc` method is all about showing off, not returning stuff. Let it be in its void glory.
+
+```java title="java" {1,10}
+    public static void randomFunc(ArrayList<String> infoList) {
+        for (String info : infoList) {
+            System.out.println(info);
+        }
+    }
+
+    public static void main(String[] args) {
+        ArrayList<String> details = new ArrayList<>();
+        details.add("Delhite ");
+        randomFunc(details);
+    }
+```
+
+>When you're dealing with void methods, respect their void-ness. Trying to print what's not meant to be printed will lead you straight into the `Void type not allowed here` territory.
+
+### 2. Change the return type
+
+If you're all about getting something in return, switch up your method. Make `randomFunc` return something, like an `ArrayList<String>`, and then flaunt it.
+
+```java title="java" {1,9}
+    public static ArrayList<String> randomFunc(ArrayList<String> infoList) {
+        //some code here
+        return infoList;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<String> details = new ArrayList<>();
+        details.add("Delhite");
+        System.out.println(randomFunc(details));
+    }
+```
+
+>If you want something in return, declare your method accordingly. Don't expect a void to play by the rules of returns.
+
+>Mind those imports! Importing more than you need is like inviting uninvited guests. Keep your packages in check.
+
+
+## FAQs
+
+### What is void type in Java?
+In Java, `void` is a keyword used as a return type for methods to indicate that the method does not return any value. Void methods are meant for performing actions rather than producing results.
+
+### Is void a return type or not?
+Yes, void is a return type in Java, but it signifies that the method does not return any value. It is used for methods that perform actions without producing a result.
+ 
+## Conclusion
+
+There you have it, The "**Void type not allowed here**" bug stands no chance against your code skills. Whether you're embracing the void or turning to other return types, you're now armed to tackle it head-on. Keep coding, keep sipping that cutting chai, and may your code always be bug-free! 
+
+---
+## References:
+- [Oracle Docs][1]
+
+- [Java Documentation](https://docs.oracle.com/en/java/javase/11/docs/api/index.html)
+
+
+  [1]: https://docs.oracle.com/javase/8/docs/api/index.html

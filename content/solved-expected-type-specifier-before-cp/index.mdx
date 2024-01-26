@@ -1,0 +1,286 @@
+---
+title: "[Solved] Expected type-specifier before"
+description: "Ever stumbled upon the 'Expected Type-Specifier Before' error in your code? It's like trying to order a dish in Delhi without knowing its name – you're missing a crucial detail!"
+image: "../../public/blogs/marvin-meyer-SYTO3xs06fU-unsplash.jpg"
+publishedAt: "2022-9-12"
+updatedAt: "2022-9-14"
+author: "Blogkinng"
+isPublished: true
+tags:
+- cpp
+- typeerror
+- operands
+---
+
+
+
+Ever stumbled upon the '**Expected Type-Specifier Before**' error in your code? It's like trying to order a dish in Delhi without knowing its name – you're missing a crucial detail! This error occurs when the compiler expects a specific data type, but it doesn't find it where it should be. Fear not! here is a quick fix: make sure to include the necessary data type declaration before using it in your code.
+
+## What is this problem?
+
+Let's dive straight into the matter. The "**Expected type-specifier before classname**" error is a common problem in `C++` programming. It usually crops up when you're working with elements like classes, shared pointers, or pure virtual functions, and the compiler expects a type-specifier (like a class name) but encounters something else. It's similar to ordering a beloved Delhi dish and receiving an entirely different cuisine.
+
+### Case 1: Missing or Misspelled Class Name
+
+Imagine you're defining a shared pointer to a class, but you either misspelled the class name or forgot to include the necessary header. This scenario can trigger the error.
+
+### Case 2: Defective Inclusion Guards
+
+Your inclusion guards (those `#ifndef` and  `#define` statements) might be faulty, leading to this error. This could happen due to a typo or a copy-paste mistake.
+
+### Case 3: Double Usage of Inclusion Guards
+
+Sometimes, you might accidentally use inclusion guards twice. This can occur when two separate files both use `#define MYHEADER_H`, even if they are in different directories.
+
+### Case 4: Template Misuse
+
+If you're working with templates, you might forget to specify the template parameter when creating an instance. For example, using new `Vector()` should be `new Vector<int>()`.
+
+### Case 5: Compiler Confusion on Scope
+
+The compiler might misinterpret the scope you intended. For instance, if you have `NamespaceA::NamespaceB` and also `<global scope>::NamespaceB`, the compiler, when already within `NamespaceA`, might assume you meant `NamespaceA::NamespaceB`. To avoid this, explicitly specify the scope you intend.
+
+## How to recreate this issue?
+
+Recreating this error is as straightforward as hailing an auto-rickshaw in Delhi. Let's explore multiple scenarios:
+
+### Case 1: Missing or Misspelled Class Name
+
+Define a shared pointer to a class but either misspell the class name or forget to include the required header file. The compiler, like a vigilant Delhi traffic cop, will flag this as an error.
+
+### Case 2: Defective Inclusion Guards
+
+Introduce defects in your inclusion guards by making them mismatch or contain typos. This can happen when `#ifndef HEADER_H`  doesn't match  `#define HEADR_H` due to a typo or copy-paste mistake.
+
+### Case 3: Double Usage of Inclusion Guards
+
+Create two separate files in different directories and unintentionally use the same inclusion guards in both. The compiler may get confused, leading to the error.
+
+### Case 4: Template Misuse
+
+Work with templates and forget to specify the template parameter when creating an instance. This can confuse the compiler.
+
+### Case 5: Compiler Confusion on Scope
+
+Define namespaces or scopes that share similar names, and let the compiler assume the wrong one. Ensure you explicitly access the intended scope.
+
+## Code examples
+
+Let's dive into the code to illustrate these cases:
+
+### Case 1: Missing or Misspelled Class Name
+
+```cpp title="c++" {4,12}
+#include <iostream>
+using namespace std;
+
+class Delhiite {
+  public:
+    void Greet() {
+        cout << "Namaste from Delhi!" << endl;
+    }
+};
+
+int main() {
+  Dehliite person = new Dehliite(); // Error occurs here
+  person.Greet();
+  return 0;
+}
+```
+### Case 2: Defective Inclusion Guards
+
+```cpp title="c++" {2}
+#ifndef METRO_H
+#define METRO_HH // Typo here, should be METRO_H
+// Your code here
+#endif
+```
+
+### Case 3: Double Usage of Inclusion Guards
+```cpp title="File1.cpp" {3}
+// In File1.cpp
+
+#define METRO_H
+// Your code here
+```    
+```cpp title="File2.cpp" {3}
+// In File2.cpp (in a different directory):
+
+#define METRO_H
+// Your code here
+```
+### Case 4: Template Misuse
+
+```cpp title="c++" {7}
+template <typename T>
+class Adventure {
+  // Class code here
+};
+
+int main() {
+  Adventure park; // Error occurs here
+  return 0;
+}
+```
+### Case 5: Compiler Confusion on Scope
+```cpp title="c++" {2,11,21}
+namespace Delhi {
+  class Traffic {
+  public:
+    void Jam() {
+        // Traffic jam code
+    }
+  };
+}
+
+namespace India {
+  class Traffic {
+  public:
+    void Smooth() {
+        // Smooth traffic code
+    }
+  };
+}
+
+int main() {
+  Delhi::Traffic traffic;
+  traffic.Smooth(); // Error occurs here
+  return 0;
+}
+```
+
+## Error messages
+
+Upon compiling these codes, you'll likely encounter error messages like:
+```
+error: expected type-specifier before 'Dehliite'
+```
+![][1]
+## What was wrong in the code
+
+Now, let's unravel the issues within the code
+
+### Case 1: Missing or Misspelled Class Name
+
+The error arises because we attempted to create a shared pointer to a class called "Dehliite," but there's a typo in the class name; it should be "Delhiite." Additionally, the necessary header file for the class may be missing.
+
+>Double-check your class names and ensure they are correctly spelled.
+Verify that you've included the appropriate header files for your classes.
+
+
+### Case 2: Defective Inclusion Guards
+
+The error occurs because there's a typo in the `#define` statement, making it mismatch with the #ifndef statement. Inclusion guards should be identical to avoid this error.
+
+
+>Carefully inspect your inclusion guards for typos.
+Ensure consistency between `#ifndef` and `#define` statements.
+
+### Case 3: Double Usage of Inclusion Guards
+
+This error results from using the same inclusion guards in two separate files, causing ambiguity for the compiler.
+
+
+>Use distinct inclusion guards for different files, especially in separate directories.
+Organize your code to prevent unintentional reuse of inclusion guards.
+
+### Case 4: Template Misuse
+
+The error occurs because we forgot to specify the template parameter when creating an instance of the Vector class. Templates require explicit type specification.
+
+
+>When working with templates, be sure to specify the template parameter (e.g., `Vector<int>`).
+Avoid generic usage of templates without specifying types.
+
+### Case 5: Compiler Confusion on Scope
+
+In this case, the compiler misinterprets the scope, assuming the wrong namespace. It's essential to explicitly access the intended scope.
+
+
+>When dealing with multiple namespaces or scopes, use the scope resolution `operator (::)` to specify the correct scope.
+Be mindful of naming conflicts between different scopes.
+
+## Solutions
+
+Time to equip ourselves with solutions for these cases:
+
+### Case 1: Missing or Misspelled Class Name
+
+#### Solution 1: Correct the Class Name
+
+The simplest solution is to correct the class name when defining the shared pointer.
+```cpp title="c++" {2}
+int main() {
+  Delhiite person = new Delhiite(); // Corrected class name
+  person.Greet();
+  return 0;
+}
+```
+
+#### Solution 2: Include the Header File
+
+If the missing header file is the issue, make sure to include it.
+
+```cpp title="c++" {1}
+#include "Delhiite.h" // Include the necessary header file
+
+int main() {
+  Delhiite person = new Delhiite();
+  person.Greet();
+  return 0;
+}
+```
+### Case 2: Defective Inclusion Guards
+
+#### Solution: Match Inclusion Guards
+
+Ensure that your `#ifndef` and `#define` statements match exactly.
+
+```cpp title="c++" {1,2}
+#ifndef METRO_H
+#define METRO_H // Match the names here
+// Your code here
+#endif
+```
+
+### Case 3: Double Usage of Inclusion Guards
+
+#### Solution: Use Unique Guards
+
+In different directories or files, use unique inclusion guards to prevent conflicts.
+
+### Case 4: Template Misuse
+
+#### Solution: Specify Template Parameter
+
+When working with templates, explicitly specify the template parameter when creating instances.
+
+```cpp title="c++" {2}
+int main() {
+  Adventure <int> park; // Specify the template parameter
+  return 0;
+}
+```
+### Case 5: Compiler Confusion on Scope
+
+#### Solution: Use Scope Resolution Operator
+
+To avoid scope confusion, use the scope resolution `operator (::)` to explicitly access the intended scope.
+```cpp title="c++" {2}
+int main() {
+  Delhi::Traffic traffic;
+  traffic.Smooth(); // Explicitly specify the scope
+  return 0;
+}
+```
+## Conclusion
+
+We've solved "**Expected type-specifier before classname**" error, all while enjoying the flavours of Delhi's diverse streets. Remember to check your class names, inclusion guards, template usage, scope resolutions, and naming conventions to overcome this error confidently. With these insights and solutions, you'll navigate through your `C++` coding adventure, much like an experienced traveller wandering Delhi's neighbourhoods. Happy coding, and may your code shine as brilliantly as the lights of Delhi's iconic landmarks at night! 
+
+---
+## References
+
+- [C++ Types](https://en.cppreference.com/w/cpp/language/types)
+
+
+  [1]: https://logiclair.org/?qa=blob&qa_blobid=2971644930084852952

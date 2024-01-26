@@ -1,0 +1,209 @@
+---
+title: "[Solved] No instance of overloaded function matches the argument list"
+description: "Ever encountered the 'No Instance of Overloaded Function Matches the Argument list' error? It happens when you call a function with incompatible arguments."
+image: "../../public/blogs/Screenshot from 2024-01-26 16-43-16.png"
+publishedAt: "2023-9-12"
+updatedAt: "2023-9-12"
+author: "Blogkinng"
+isPublished: true
+tags: 
+- cpp
+- c
+---
+
+
+
+Ever encountered the '**No Instance of Overloaded Function Matches the Argument list**' error? It happens when you call a function with incompatible arguments. The solution: adjust your function call to match the expected arguments, and we'll show you how in this article.
+
+## What is this problem?
+
+Let's dive straight into the heart of the matter. The **"No instance of overloaded function"** error is a classic puzzle in C++ programming. It arises when you're working with overloaded functions, and the compiler can't find a version of the function that matches the arguments you provided. It's similar to ordering your favourite street food in Delhi, but the vendor doesn't have the exact thing you're asking for.
+
+### Case 1: Mismatched Argument Types
+
+Imagine you have an overloaded function that accepts integers, and you call it with a floating-point number or a string. This mismatch in argument types can trigger the error.
+![][1]
+
+### Case 2: Missing Overloaded Version
+
+You may encounter this error if you attempt to use an overloaded function without defining a version that matches the provided arguments.
+
+## How to recreate this issue?
+
+Recreating this error is as straightforward as sipping a steaming cup of masala chai in Delhi. Let's explore two cases:
+
+### Case 1: Mismatched Argument Types
+
+Write a C++ program with an overloaded function designed to accept integers, and then call it with a floating-point number or a character. The compiler, like a vigilant Delhi traffic cop, will promptly flag this as an error.
+
+### Case 2: Missing Overloaded Version
+
+Create a situation where you attempt to use an overloaded function that lacks a version matching the provided arguments. The compiler will be puzzled, and the error will emerge.
+
+## Code examples
+
+Let's get hands-on with code to illustrate these cases:
+
+### Case 1: Mismatched Argument Types
+```cpp title="cpp" {13,18,27}
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Metro
+{
+
+public:
+  Metro()
+  {
+  }
+
+  void Print(int x)
+  {
+    cout << "You entered an integer: " << x << endl;
+  }
+
+  void Print(double y)
+  {
+    cout << "You entered a double: " << y << endl;
+  }
+};
+
+int main()
+{
+  Metro m;
+  m.Print("yellow line");
+
+  return 0;
+}
+```
+
+### Case 2: Missing Overloaded Version
+```cpp title="cpp" {13,22}
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Metro
+{
+
+public:
+  Metro()
+  {
+  }
+
+  void Print(char x)
+  {
+    cout << "You entered an character: " << x << endl;
+  }
+};
+
+int main()
+{
+  Metro m;
+  m.Print("yellow line");
+
+  return 0;
+}
+```
+
+
+Upon compiling these codes, you'll likely encounter error messages like:
+```
+error: no instance of overloaded function "Print" matches the argument list
+```
+
+## What was wrong in the code
+
+Now, let's unravel the issues within the code :
+
+### Case 1: Mismatched Argument Types
+
+The error arises because we're trying to call the `Print` function with a `string` argument. However, our overloaded functions are defined for `int` and `double` arguments. It's like trying to fit a square peg into a round hole.
+
+
+>Always ensure that the argument you provide matches one of the overloaded versions of the function.
+Be mindful of implicit type conversions that may lead to unexpected results.
+
+
+
+### Case 2: Missing Overloaded Version
+
+Here, we're attempting to use an overloaded function, `Print`, with a `string` argument, but there's no version of `Print` designed for `char` arguments.
+
+
+>When using overloaded functions, make sure to define versions that cover all the argument types you intend to use.
+Pay attention to function signatures and argument types when implementing overloaded functions.
+
+## Solutions
+
+Time to equip ourselves with solutions for these cases:
+
+### Case 1: Mismatched Argument Types
+
+#### Solution 1: Use the Correct Function Version
+
+The simplest solution is to call the `Print` function with the appropriate argument type that matches one of the overloaded versions. Here's how:
+
+```cpp title="cpp" {4}
+int main() {
+  Metro m;
+  int number = 42;
+  m.Print(number); // Matching the argument type
+  return 0;
+}
+```
+
+#### Solution 2: Typecast the Argument
+
+You can also resolve this by typecasting the argument to the desired type before calling the function.
+
+ Be cautious with typecasting, as it may lead to data loss or unexpected behavior.
+
+```cpp title="cpp" {4}
+int main() {
+  Metro m;
+  char character = 'A';
+  m.Print(static_cast<int>(character)); // Typecasting the argument
+  return 0;
+}
+```
+
+### Case 2: Missing Overloaded Version
+
+#### Solution 1: Define the Missing Overloaded Version
+
+In this scenario, you need to define an overloaded version of the `Print` function that accepts `char` arguments.
+
+```cpp title="cpp" {1}
+void Print(char c) {
+  std::cout << "You entered a character: " << c << std::endl;
+}
+```
+
+#### Solution 2: Adjust the Argument Type
+
+Alternatively, you can adjust the argument to match an existing overloaded version of the function.
+
+```cpp title="cpp" {4}
+int main() {
+  Metro m;
+  int number = 42;
+  m.Print(number); // Matching the argument type
+  return 0;
+}
+```
+
+## Conclusion
+
+Whew! We've solved the "**No Instance of Overloaded Function Matches the Argument List**" error, all while embracing the spirit of Delhi. Remember to match your function calls with the correct argument types, define overloaded versions as needed, and tread cautiously with typecasting. Armed with these insights and solutions, you'll confidently navigate your C++ coding adventure, just like a traveller exploring Delhi's diverse neighbourhoods. Happy coding, and may your code shine as brightly as Delhi's iconic monuments at night! 
+
+---
+## References
+
+- [C++ Function Overloading](https://en.cppreference.com/w/cpp/language/classes)
+
+
+
+
+  [1]: https://logiclair.org/?qa=blob&qa_blobid=10956886260086558723

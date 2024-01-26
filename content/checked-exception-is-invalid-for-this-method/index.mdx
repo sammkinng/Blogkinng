@@ -1,0 +1,143 @@
+---
+title: "Checked exception is invalid for this method"
+description: "Sometimes when you are writing unit test for your world conquering Java program & using Mockito. The enigmatic `Checked exception is invalid for this method' error often raises its head, causing confusion and frustration."
+image: "../../public/blogs/lauren-mancke-aOC7TSLb1o8-unsplash.jpg"
+publishedAt: "2023-10-21"
+updatedAt: "2023-11-12"
+author: "Blogkinng"
+isPublished: true
+tags:
+- java
+- mockito
+- junit
+- mockito
+---
+
+
+
+Sometimes when you are writing unit test for your world conquering Java program & using **Mockito**. The enigmatic **"Checked exception is invalid for this method"** error often raises its head, causing confusion and frustration. It comes When you attempt to instruct *Mockito* to throw a *Custom Exception* (checked), it contradicts the method signature defined leading to the error. Quick Fix: Throw *Runtime Exception* instead.
+
+## The Challenge of Checked Exceptions
+
+The error message "**Checked exception is invalid for this method**" is a common problem when working with **Mockito**. It indicates that the code being tested invokes a method that throws a checked exception, and **Mockito** is unsure how to handle it. But why does this issue arise, and how can we resolve it?
+
+## Creating the Problem
+
+Let's set the stage for this intriguing problem using a test example:
+
+```java title="java" {4}
+    @Test(expectedExceptions = CustomException.class)
+    public void errorProneFunc() {
+        List<String> list = mock(List.class);
+        when(list.get(2)).thenThrow(new CustomException());
+        String test = list.get(2);
+    }
+
+    public class CustomException extends Exception {
+        // Define your exception here
+    }
+```
+
+In this test, we're trying to mock the `list.get()` method to throw our custom `CustomException`. However, this often leads to an error message, leaving developers puzzled.
+
+## The Error Message
+<Image
+  src="/blogs/Screenshot from 2024-01-26 18-52-08.png"
+  width="1144"
+  height="200"
+  alt="Image"
+  sizes="100vw"
+/>
+
+
+The error message usually looks like this:
+
+```
+    org.mockito.exceptions.misusing.MisplacedException: Checked exception is invalid for this method:
+```
+
+## What's Wrong with the Code?
+
+The issue at hand is that *Mockito* faces difficulties when dealing with methods that throw checked exceptions. It is essential to understand that the `get(int index)` method in the List interface, as per the List API, exclusively throws `IndexOutOfBoundsException`, which is an unchecked exception extending `RuntimeException`. When you attempt to instruct *Mockito* to throw a `CustomException`, it contradicts the method signature defined in the List API, leading to the error.
+
+## Solutions to the Dilemma
+
+### Solution 1: Throw Unchecked Exceptions
+
+To overcome the "**Checked exception is invalid for this method**" error, it is often recommended to work with unchecked exceptions. The `get(int index)` method in the List API doesn't specify any checked exceptions, so **Mockito** works smoothly when we throw unchecked exceptions.
+
+```java title="java" {4}
+    @Test
+    public void throwUncheckedException() {
+        List<String> list = mock(List.class);
+        when(list.get(0)).thenThrow(new ArrayIndexOutOfBoundsException());
+        String test = list.get(0);
+
+        // Your testing logic here
+    }
+```
+
+By aligning your mock behaviour with the List API, you can avoid the error and create robust tests.
+
+### Solution 2: Utilize the willAnswer Technique
+
+An alternative approach involves using willAnswer to achieve the desired behaviour. For instance, you can create a scenario where your code throws a checked exception upon invoking a specific method.
+
+```java title="java" /willAnswer/
+    given(someObj.someMethod(stringArg1)).willAnswer(invocation -> {
+        throw new Exception("Custom Exception Message");
+    });
+```
+
+This approach can be beneficial when working with complex scenarios that require fine-grained control over mock behaviour.
+
+### Solution 3: Kotlin's "given" Function
+
+If you're working with Kotlin, you can leverage the `given` function for your *Mockito* tests. This function allows you to specify the behaviour of mocked methods, including throwing checked exceptions.
+
+```java title="java" /given/
+    given(myObject.myCall()).willAnswer {
+        throw IOException("Ooops")
+    }
+```
+
+This Kotlin-specific approach adds flexibility to your testing process, especially if your project is Kotlin-based.
+
+## Mockito's Handling of Checked Exceptions
+
+It's crucial to note that *Mockito* does permit the throwing of checked exceptions as long as they are declared in the method signature. For example, if a method in your code declares a checked exception, you can instruct Mockito to throw it without any issues.
+
+```java title="java"
+    class FooException extends Exception {
+        // This is a checked exception
+    }
+
+    interface SomeInterface {
+        void eggs() throws FooException;
+    }
+
+    // It's legal to write:
+    CoolInterface coolInterface = mock(CoolInterface.class);
+    when(coolInterface.eggs()).thenThrow(FooException.class);
+```
+
+However, if you attempt to throw a checked exception that is not declared in the method signature, *Mockito* will produce a generic error message that may be misleading.
+
+>When you tell Mockito to throw an invalid exception, a `checked` exception error will occur
+
+
+## Conclusion
+
+In the realm of Java testing with *Mockito, the "**Checked exception is invalid for this method**" error may appear confounding at first. Nevertheless, by understanding the method signatures, utilizing unchecked exceptions when necessary, and exploring advanced techniques like willAnswer and Kotlin's "**given**" function, you can navigate this challenge and create more robust unit tests. **Mockito**, when used judiciously, is a powerful tool in your Java development arsenal. Happy coding!
+
+---
+## References
+
+1. [Mockito Documentation](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html)
+2. [Java List Interface](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html)
+3. [BDDMockito Documentation](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/BDDMockito.html)
+4. [Kotlin's Mockito Documentation](https://github.com/nhaarman/mockito-kotlin)
+5. [Java Checked and Unchecked Exceptions](https://docs.oracle.com/javase/tutorial/essential/exceptions/runtime.html)
+
+
+  [1]: https://logiclair.org/?qa=blob&qa_blobid=11161849052668223649
