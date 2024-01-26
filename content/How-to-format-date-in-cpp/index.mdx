@@ -1,0 +1,228 @@
+---
+title: "How to format Date in dd/mm/yyyy format in C++?"
+description: "Dealing with date formats is a common task in programming, and the dd/mm/yyyy format is widely used, especially in European countries. In C++, there are several methods to work with date formatting and conversion, and this article will explore these methods, providing insights, examples etc"
+image: "../../public/blogs/emile-perron-xrVDYZRGdw4-unsplash.jpg"
+publishedAt: "2023-12-01"
+updatedAt: "2023-12-03"
+author: "Blogkinng"
+isPublished: true
+tags:
+- cpp
+- date
+- datetime
+- formatting
+---
+
+
+
+Dealing with **date formats** is a common task in programming, and the `dd/mm/yyyy` format is widely used, especially in European countries. In `C++`, there are several methods to work with date formatting and conversion, and this article will explore these methods, providing insights, examples etc
+
+
+## 1. Commonly Used Date Formats
+
+Apart from `dd/mm/yyyy`, various **date formats** are widely used globally. Some examples include:
+- `yyyy-mm-dd` (ISO 8601)
+- `mm/dd/yyyy` (common in the United States)
+- `dd.mm.yyyy` (common in Europe)
+
+
+## 2. Methods to Format Date in C++
+
+### a. Using `std::tm` and `std::put_time`
+
+`C++` provides the `<iomanip>` header that includes the `std::put_time` function. You can use this in conjunction with `std::tm` to format a date. Here's a basic example:
+
+>Familiarize yourself with the `tm` structure for manipulating date components.
+```cpp title="c++" /put_time/ {5-8}
+    #include <iostream>
+    #include <iomanip>
+
+    int main() {
+        std::tm tm_date = {};  // Initialize with zeros
+        tm_date.tm_mday = 26;   // Day
+        tm_date.tm_mon = 0;    // Month (0-11)
+        tm_date.tm_year = 2023 - 1900;  // Year (years since 1900)
+
+        std::cout << std::put_time(&tm_date, "%d/%m/%Y") << std::endl;
+        return 0;
+    }
+```
+**Output:**
+```
+    26/01/2023
+```
+![][1]
+
+### b. Using `strftime` function
+
+The C library function `strftime` can also be utilized for date formatting:
+```cpp title="c++" {5-8,11,13}
+    #include <iostream>
+    #include <ctime>
+
+    int main() {
+        std::tm tm_date = {};  // Initialize with zeros
+        tm_date.tm_mday = 26;   // Day
+        tm_date.tm_mon = 0;    // Month (0-11)
+        tm_date.tm_year = 2023 - 1900;  // Year (years since 1900)
+
+        char buffer[80];
+        std::strftime(buffer, sizeof(buffer), "%d/%m/%Y", &tm_date);
+        
+        std::cout << buffer << std::endl;
+        return 0;
+    }
+```
+**Output:**
+```
+    26/01/2023
+```
+
+### c. External Libraries (e.g., Howard Hinnant's date library)
+
+In this example, we use date::sys_days from the date library to represent a date. The format function is then used to format the date according to the desired format (`%d-%m-%Y` in this case).
+
+
+>Ensure you have the date library included in your project. You can find the date library at https://github.com/HowardHinnant/date. Follow the library's documentation for installation instructions.
+
+```cpp title="c++" {2,8,11}
+    #include <iostream>
+    #include <date/date.h>
+
+    using namespace date;
+    
+    int main() {
+        // Create a date object using the date library
+        sys_days sysDate = sys_days{2023_y/01/26};
+
+        // Convert and format the date
+        std::cout << format("%d/%m/%Y", sysDate) << std::endl;
+
+        return 0;
+    }
+```
+**Output:**
+```
+    26/01/2023
+```
+![][2]
+
+>Implement proper error handling when working with user input to ensure the entered date is valid.
+
+
+## 3. Methods to Convert Date Formats in C++
+
+### a. Using `std::tm` and `std::put_time`
+
+Conversion between **date formats** can be achieved by first parsing the date into a `std::tm` structure and then formatting it into the desired format:
+
+```cpp title="c++" {7-9,12}
+    #include <iostream>
+    #include <iomanip>
+    #include <sstream>
+
+    int main() {
+        // Parse the input date
+        std::tm tm_date = {};
+        std::istringstream ss("26/01/2023");
+        ss >> std::get_time(&tm_date, "%d/%m/%Y");
+
+        // Format the date in the desired output format
+        std::cout << std::put_time(&tm_date, "%Y-%m-%d") << std::endl;
+        
+        return 0;
+    }
+```
+**Output:**
+```
+    2023-01-26
+```
+![][3]
+
+
+### b. Using `strftime` and `strptime`
+
+The C library functions `strftime` and `strptime` can be combined for date format conversion:
+
+```cpp title="c++" {7-9,13,15}
+    #include <iostream>
+    #include <iomanip>
+    #include <sstream>
+
+    int main() {
+        // Parse the input date
+        std::tm tm_date = {};
+        std::istringstream ss("26/01/2023");
+        ss >> std::get_time(&tm_date, "%d/%m/%Y");
+
+        // Format the date in the desired output format
+        char buffer[80];
+        std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", &tm_date);
+
+        std::cout << buffer << std::endl;
+        
+        return 0;
+    }
+```
+**Output:**
+```
+    2023-01-26
+```
+![][4]
+
+### c. External Libraries (e.g., Howard Hinnant's date library)
+
+In this example, we use `date::sys_days` for representing the date and the parse and format functions from the date library for parsing and formatting, respectively. Adjust the input and output formats as needed for your specific use case.
+
+>Make sure to have the date library included in your project, and follow the library's documentation for installation instructions: https://github.com/HowardHinnant/date.
+
+```cpp title="c++" {6-8,11}
+    #include <iostream>
+    #include <date/date.h>
+
+    int main() {
+        // Parse the input date using the date library
+        std::istringstream ss("26/01/2023");
+        date::sys_days sysDate;
+        ss >> date::parse("%d/%m/%Y", sysDate);
+
+        // Format the date in the desired output format using the date library
+        std::cout << format("%Y-%m-%d", sysDate) << std::endl;
+
+        return 0;
+    }
+```
+**Output:**
+```
+    2023-01-26
+```
+
+## 4. FAQs
+
+### How can I handle user input for date formatting and conversion?
+Utilize functions like `std::get_time` or custom parsing functions to handle user input in the desired format. For conversion, parse the input and then format it into the desired format.
+
+### Are there any cross-platform concerns with these methods?
+The methods provided are part of the `C++` standard library and should be cross-platform. External libraries may require additional considerations.
+
+## 5. Conclusion
+
+In this comprehensive exploration of working with **date formats** in `C++`, we've covered various methods to both format and convert dates. The `C++` standard library provides functionalities like `std::put_time`, `strftime`, and external libraries such as **Boost.Date_Time** and **date** offer additional robust solutions.
+
+Understanding the `std::tm` structure is crucial for manipulating date components, and using functions like `std::get_time` and custom parsing functions facilitates user input handling. For more advanced scenarios, external libraries like Boost.Date_Time or date can significantly simplify date and time operations.
+
+As a programmer, it's essential to be aware of commonly used **date formats** such as `dd/mm/yyyy`, `yyyy-mm-dd` (ISO 8601), `mm/dd/yyyy`, and `dd.mm.yyyy`. 
+
+In conclusion, mastering date formatting and conversion in `C++` is a valuable skill for developers working on applications where precise date representation is critical. Whether you choose standard `C++` functionality or external libraries, the flexibility and power of `C++` allow you to tailor solutions to your specific requirements.
+
+## 6. References
+
+- C++ Reference: [std::put_time](https://en.cppreference.com/w/cpp/io/manip/put_time)
+- C++ Reference: [strftime](https://en.cppreference.com/w/cpp/chrono/c/strftime)
+- Howard Hinnant's date library Documentation: [Howard Hinnant's date library](https://github.com/HowardHinnant/date)
+
+
+  [1]: https://logiclair.org/?qa=blob&qa_blobid=10289005506005195742
+  [2]: https://logiclair.org/?qa=blob&qa_blobid=2022761961937054638
+  [3]: https://logiclair.org/?qa=blob&qa_blobid=16803086425927127084
+  [4]: https://logiclair.org/?qa=blob&qa_blobid=1616261530304210350
