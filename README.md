@@ -1,10 +1,5 @@
 # Blogkinng 🔥
 
-![GitHub stars](https://img.shields.io/github/stars/sammkinng/Nextjs-tailwindcss-blog-template?style=social&logo=ApacheSpark&label=Stars)&nbsp;&nbsp;
-![GitHub forks](https://img.shields.io/github/forks/sammkinng/Nextjs-tailwindcss-blog-template?style=social&logo=KashFlow&maxAge=3600)&nbsp;&nbsp;
-![Github Followers](https://img.shields.io/github/followers/sammkinng.svg?style=social&label=Follow)&nbsp;&nbsp;<br />
-
-
 Checkout My Personal blog: [Blogkinng](https://blog.sammkinng.in/)<br />
 Checkout My Portdolio: [Portfolio](https://sammkinng.in/)
 
