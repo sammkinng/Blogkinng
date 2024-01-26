@@ -13,7 +13,7 @@ export default function ContactForm() {
     reset()
     const subject="Let's Connect"
     const body=`Hello! My name is ${data.name} and I want to discuss a potential project. You can email me at ${data.email} or reach out to me on ${data.phone}. Here are some details about my project: ${data.sub}`
-    window.location.href=`mailto:blog@sammkinng.in?subject=${subject}&body=${body}`;
+    window.location.href=`mailto:pk@sammkinng.in?subject=${subject}&body=${body}`;
   };;
   console.log(errors);
 
