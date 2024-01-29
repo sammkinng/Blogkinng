@@ -1,12 +1,10 @@
 export default function manifest() {
     return {
-      name: 'Next.js App',
-      short_name: 'Next.js App',
-      description: 'Next.js App',
+      name: 'Blogkinng',
+      short_name: 'Blogkinng',
+      description: 'Prince Yadav Blogs',
       start_url: '/',
       display: 'standalone',
-    //   background_color: '#fff',
-    //   theme_color: '#fff',
       icons: [
         {
           src: '/favicon-32x32.png',
