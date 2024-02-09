@@ -70,6 +70,7 @@ const Footer = () => {
           className="inline-block w-6 h-6 mr-4"
           aria-label="Reach out to me via LinkedIn"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <LinkedinIcon className="hover:scale-125 transition-all ease duration-200" />
         </a>
@@ -78,6 +79,7 @@ const Footer = () => {
           className="inline-block w-6 h-6 mr-4"
           aria-label="Reach out to me via Twitter"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <TwitterIcon className="hover:scale-125 transition-all ease duration-200" />
         </a>
@@ -86,6 +88,7 @@ const Footer = () => {
           className="inline-block w-6 h-6 mr-4 fill-light"
           aria-label="Check my profile on Github"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <GithubIcon className="fill-light dark:fill-dark  hover:scale-125 transition-all ease duration-200" />
         </a>
@@ -94,6 +97,7 @@ const Footer = () => {
           className="inline-block w-6 h-6 mr-4"
           aria-label="Check my profile on Instagram"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <InstagramIcon className="hover:scale-125 transition-all ease duration-200" />
         </a>
