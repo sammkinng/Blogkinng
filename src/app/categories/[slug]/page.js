@@ -26,25 +26,32 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   return {
-    title: `${params.slug.replaceAll("-"," ")} Blogs`,
+    title: `${params.slug.replaceAll("-", " ")} Blogs`,
     description: `Learn more about ${params.slug === "all" ? "web development" : params.slug} through our collection of expert blogs and tutorials`,
   };
 }
 
 
 const CategoryPage = ({ params }) => {
-  const allCategories = ["all"];
-  const blogs = allBlogs.filter((blog) => {
-    return blog.tags.some((tag) => {
+  const allCategories = ["all"]; // Initialize with 'all' category
+  allBlogs.forEach(blog => {
+    blog.tags.forEach(tag => {
       const slugified = slug(tag);
       if (!allCategories.includes(slugified)) {
         allCategories.push(slugified);
       }
-      if (params.slug === "all") {
-        return true;
-      }
-      return slugified === params.slug;
     });
+  });
+
+  // Sort allCategories to ensure they are in alphabetical order
+  allCategories.sort();
+
+  // Step 2: Filter blogs based on the current category (params.slug)
+  const blogs = allBlogs.filter(blog => {
+    if (params.slug === "all") {
+      return true; // Include all blogs if 'all' category is selected
+    }
+    return blog.tags.some(tag => slug(tag) === params.slug);
   });
 
   return (
