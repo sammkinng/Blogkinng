@@ -14,7 +14,7 @@ tags:
 
 In the world of `Python` programming, classes and objects serve as the fundamental building blocks of __object-oriented programming__ (OOP), offering a powerful mechanism for organizing code and modeling real-world entities. Classes define the structure and behavior of objects, while objects represent individual instances of those classes. This article delves into the intricate details of classes and objects in `Python`, exploring their significance and role in software development.
 
-The importance of classes and objects in `Python` programming cannot be overstated. They provide a modular and organized approach to code design, promoting reusability, maintainability, and scalability. By understanding and effectively utilizing classes and objects, developers can create sophisticated applications that are easier to manage and extend.
+The importance of classes and objects in `Python` programming cannot be overstated. They provide a modular and organized approach to code design, promoting reusability, maintainability, and scalability. By understanding and effectively utilizing classes and objects, we can create sophisticated applications that are easier to manage and extend.
 
 ## Classes in Python
 A class in `Python` is a blueprint for creating objects. It serves as a template or a prototype that defines the attributes (data) and methods (functions) that will be associated with objects created from that class. In other words, a class defines the structure and behavior of objects.
@@ -153,15 +153,15 @@ Here's an example illustrating the definition and implementation of instance met
 
 ```python
 class Car:
-    def __init__(self, make, model, year):
-        self.make = make
+    def __init__(self, brand, model, year):
+        self.brand = brand
         self.model = model
         self.year = year
         self.odometer_reading = 0
 
     def get_full_name(self):
         """Return a formatted full name of the car."""
-        return f"{self.year} {self.make} {self.model}"
+        return f"{self.year} {self.brand} {self.model}"
 
     def read_odometer(self):
         """Print the current odometer reading."""
@@ -186,7 +186,7 @@ class Car:
 ```
 
 In this example:
-- `Car` is a class representing a car with attributes such as make, model, year, and odometer_reading.
+- `Car` is a class representing a car with attributes such as brand, model, year, and odometer_reading.
 - `get_full_name()`, `read_odometer()`, `update_odometer()`, and `increase_odometer()` are instance methods defined within the class.
 - These instance methods take `self` as the first parameter, allowing them to access and modify instance attributes such as `make`, `model`, `year`, and `odometer_reading`.
 - The `get_full_name()` method returns a formatted string containing the full name of the car.
@@ -239,7 +239,7 @@ Class attributes and methods in `Python` are features of a class that are shared
    obj.class_method()  # Output: class attribute
    ```
 
-Class attributes and methods provide a way to define properties and behaviors that are shared among all instances of a class. They contribute to the overall structure and functionality of the class, enabling code organization and promoting reusability. By understanding and utilizing class attributes and methods, developers can design more robust and scalable object-oriented solutions in `Python`.
+Class attributes and methods provide a way to define properties and behaviors that are shared among all instances of a class. They contribute to the overall structure and functionality of the class, enabling code organization and promoting reusability. By understanding and utilizing class attributes and methods, we can design more robust and scalable object-oriented solutions in `Python`.
 
 ## Encapsulation
 
@@ -534,4 +534,13 @@ In conclusion, classes and objects play a crucial role in `Python` programming, 
 - **Encapsulation and Data Hiding:** Encapsulation bundles data and methods within a class, promoting modularity, abstraction, and information hiding. Access specifiers control visibility and accessibility of class members.
 - **Special Methods:** Special methods, also known as magic methods, enable customization of object behavior in response to specific operations or built-in functions.
 
-By understanding and effectively utilizing classes and objects in `Python`, developers can create modular, organized, and maintainable codebases. Encapsulation and data hiding ensure the integrity and security of class data, while special methods provide flexibility and customization options for object behavior. With these concepts and practices, `Python` programmers can build sophisticated applications that are easier to manage, extend, and maintain.
+By understanding and effectively utilizing classes and objects in `Python`, we can create modular, organized, and maintainable codebases. Encapsulation and data hiding ensure the integrity and security of class data, while special methods provide flexibility and customization options for object behavior. With these concepts and practices, `Python` programmers can build sophisticated applications that are easier to manage, extend, and maintain.
+
+---
+### References
+
+1. Python Documentation: Classes - https://docs.python.org/3/tutorial/classes.html
+2. Real Python: Python Class Attributes: An Overly Thorough Guide - https://realpython.com/instance-class-and-static-methods-demystified/
+3. GeeksforGeeks: Python Object Oriented Programming - https://www.geeksforgeeks.org/python-object-oriented-programming/
+4. Programiz: Python Classes and Objects - https://www.programiz.com/python-programming/class
+5. Python Docs: Special method names - https://docs.python.org/3/reference/datamodel.html#special-method-names
